@@ -29,7 +29,7 @@
   Users
 
   Column | Type
-  --------------
+  ----|----------
   id | Int primary key
   user_name | text
 
