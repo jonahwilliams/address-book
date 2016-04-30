@@ -17,7 +17,7 @@
   Contacts
 
   Column | Type
-  -------------
+  ----|---------
   id | Int primary key
   name | text
   birthday | text
