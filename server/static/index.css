@@ -1,0 +1,58 @@
+.title {
+  font-size: 3em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.app-control {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.app-control-item {
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  margin: 0px;
+  max-width: 200px;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgrey;
+  margin: 2px;
+  padding: 5px;
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.rest {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.rest span {
+  margin-right: 20px;
+}
+
+.add-contact {
+  border: 1px solid grey;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-item {
+  display: flex;
+  flex-direction: column;
+}

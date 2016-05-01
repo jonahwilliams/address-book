@@ -1,0 +1,15 @@
+{
+    "extends": "standard",
+    "plugins": [
+        "standard",
+        "react"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "semi": ["error", "always"]
+    }
+}
