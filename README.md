@@ -20,9 +20,10 @@
   ----|---------
   id | Int primary key
   name | text
-  birthday | text
+  birth_day | int
+  birth_month | int
+  birth_year | int
   email | text
-  address | text
   phone | text
 
 
