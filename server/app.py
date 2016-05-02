@@ -3,7 +3,10 @@ import sqlite3
 import json
 app = Flask(__name__)
 
+# Application constants
 PATH_TO_DB = './server/database/address.db'
+
+# I use these to facilitate pulling the correct keys out of the response object
 IN_DATA = [
     'first_name',
     'last_name',
@@ -24,6 +27,8 @@ OUT_DATA = [
     'phone'
 ]
 
+
+# Set up and clean up sqlite database connection
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -42,8 +47,7 @@ def hello():
     return app.send_static_file('index.html')
 
 
-# retrieves of a listing of all contacts
-#
+# retrieves of a listing of all contacts, or updates contact
 @app.route('/contacts', methods=['GET', 'POST'])
 def contacts():
     conn = get_db()
@@ -100,5 +104,6 @@ def specific_contact(contact_id):
             return json.dumps(result[0])
         else:
             return "", 404
+
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run()

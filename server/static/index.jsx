@@ -1,7 +1,20 @@
 // global React, ReactDOM
 
 
-// API
+/* interface Contact {
+ *    firstName: string;
+ *    lastName:  string;
+ *    birthDay:  string;
+ *    birthMonth: string;
+ *    birthYear:  string;
+ *    email: string;
+ *    phone: string;
+ * }
+ */
+
+/* getContacts GET /contacts
+ * @returns{[]Contact}
+ */
 function getContacts() {
   return fetch('/contacts', { method: 'GET' })
     .then(d => d.json())
@@ -19,6 +32,10 @@ function getContacts() {
     }));
 }
 
+/* addContact POST /contacts
+ * @param {Object} Contact
+ * @returns {Promise<{success: boolean}>}
+ */
 function addContact({ firstName, lastName, birthDay, birthMonth,
   birthYear, email, phone }) {
   const args = {
@@ -38,6 +55,11 @@ function addContact({ firstName, lastName, birthDay, birthMonth,
       .then(d => d.json());
 }
 
+/* updateContact PUT /contacts/:contact_id
+ * @param {Number} id the id of contact to be update
+ * @param {Contact} contact the fields to be updated
+ * @returns {Promise<{success: boolean}>}
+ */
 function updateContact(id, contact) {
   const args = {
     method: 'PUT',
@@ -56,11 +78,20 @@ function updateContact(id, contact) {
     .then(d => d.json());
 }
 
+/* deleteContact DELETE /contacts/:contact_id
+ * @params {Number} id the contact id to remove
+ * @returns {Promise<{success: true}>}
+ */
 function deleteContact(id) {
   return fetch(`/contacts/${id}`, { method: 'DELETE' })
     .then(d => d.json());
 }
 
+
+/* getContact GET /contacts/contact_id
+ * @params {Number} id the contact id to get
+ * @returns {Promise<Contact>}
+ */
 function getContact(id) {
   return fetch(`/contacts/${id}`, { method: 'GET' })
     .then(d => d.json())
@@ -172,6 +203,11 @@ function AppControl({ setGroup, setFilter, setOrder, group, filter }) {
     </div>);
 }
 
+/* ContactGroup
+ * @param {Map[String => []Contacts]} contactGroups - groups of contacts
+ * @param {Function} handleUpdate - forces refetch of all contacts
+ * @returns {JSX.Element}
+ */
 function ContactGroup({ contactGroups, handleUpdate }) {
   const groups = [...contactGroups]
     .sort((a, b) => a[0] > b[0])
@@ -188,6 +224,11 @@ function ContactGroup({ contactGroups, handleUpdate }) {
    </div>);
 }
 
+/* ContactList
+ * @param {[]Contact} contacts
+ * @param {Function} handleUpdate - forces refetch of all contacts
+ * @returns {JSX.Element}
+ */
 function ContactList({ contacts, handleUpdate }) {
   const inner = contacts.map((d, i) => {
     return (<MainContact key={i} handleUpdate={handleUpdate} {...d}/>);
@@ -198,7 +239,12 @@ function ContactList({ contacts, handleUpdate }) {
     </div>);
 }
 
-// Contact - React Component to render individual contact
+/* Contact
+ * @param {Contact} contact
+ * @param {Function} handleUpdate
+ * @param {Function} handleEdit
+ * @returns {JSX.Element}
+ */
 function Contact({ firstName, lastName, birthDay,
   birthMonth, birthYear, email, phone, id, handleUpdate, handleEdit}) {
   const handleClick = function handleClick() {
@@ -225,6 +271,11 @@ function Contact({ firstName, lastName, birthDay,
     </div>);
 }
 
+/* IfElse
+ * @param {boolean} predicate
+ * @param {[]JSX.Element} children
+ * @returns {JSX.Element}
+ */
 function IfElse({ predicate, children }) {
   if (predicate) {
     return children[0];
@@ -232,6 +283,10 @@ function IfElse({ predicate, children }) {
   return children[1];
 }
 
+/* MainContact
+ * @param {Contact} contact
+ * @returns {JSX.Element}
+ */
 class MainContact extends React.Component {
   constructor(props) {
     super(props);
@@ -256,6 +311,11 @@ class MainContact extends React.Component {
   }
 }
 
+/* EditContact
+ * @param {Contact} contact
+ * @param {Function} handleCancel
+ * @returns {JSX.Element}
+ */
 function EditContact({ contact, handleCancel }) {
   let firstNameNode;
   let lastNameNode;
@@ -284,6 +344,17 @@ function EditContact({ contact, handleCancel }) {
       handleCancel();
     }
   };
+  // Need to format date correctly for form
+  const date =  `${contact.birthYear}-${
+      +contact.birthMonth < 10
+        ? "0" + contact.birthMonth
+        : contact.birthMonth
+    }-${
+      +contact.birthDay < 10
+        ? "0" + contact.birthDay
+        : contact.birthDay
+    }`;
+  console.log(date);
   return (
     <div className="contact">
       <div className="head">
@@ -309,8 +380,7 @@ function EditContact({ contact, handleCancel }) {
           {`Birthday:`}
           <input type="date"
             ref={node => birthDayNode = node}
-            defaultValue={`${contact.birthYear}-${contact.birthMonth}-${contact.birthDay}`}
-          />
+            defaultValue={date}/>
         </span>
         <span>
           {`Email:`}
@@ -330,7 +400,11 @@ function EditContact({ contact, handleCancel }) {
     </div>);
 }
 
-// AddContact - Contact form which posts new contact to /contacts
+/* AddContact
+ * @params {Function} handleUpdate
+ * @params {Function} handleCancel
+ * @returns {JSX.Element}
+ */
 function AddContact({ handleUpdate, handleCancel }) {
   let firstNameNode;
   let lastNameNode;

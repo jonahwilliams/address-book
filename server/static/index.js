@@ -2,7 +2,7 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -14,7 +14,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // global React, ReactDOM
 
-// API
+/* interface Contact {
+ *    firstName: string;
+ *    lastName:  string;
+ *    birthDay:  string;
+ *    birthMonth: string;
+ *    birthYear:  string;
+ *    email: string;
+ *    phone: string;
+ * }
+ */
+
+/* getContacts GET /contacts
+ * @returns{[]Contact}
+ */
 function getContacts() {
   return fetch('/contacts', { method: 'GET' }).then(function (d) {
     return d.json();
@@ -36,6 +49,10 @@ function getContacts() {
   });
 }
 
+/* addContact POST /contacts
+ * @param {Object} Contact
+ * @returns {Promise<{success: boolean}>}
+ */
 function addContact(_ref) {
   var firstName = _ref.firstName;
   var lastName = _ref.lastName;
@@ -63,6 +80,11 @@ function addContact(_ref) {
   });
 }
 
+/* updateContact PUT /contacts/:contact_id
+ * @param {Number} id the id of contact to be update
+ * @param {Contact} contact the fields to be updated
+ * @returns {Promise<{success: boolean}>}
+ */
 function updateContact(id, contact) {
   var args = {
     method: 'PUT',
@@ -82,12 +104,20 @@ function updateContact(id, contact) {
   });
 }
 
+/* deleteContact DELETE /contacts/:contact_id
+ * @params {Number} id the contact id to remove
+ * @returns {Promise<{success: true}>}
+ */
 function deleteContact(id) {
   return fetch('/contacts/' + id, { method: 'DELETE' }).then(function (d) {
     return d.json();
   });
 }
 
+/* getContact GET /contacts/contact_id
+ * @params {Number} id the contact id to get
+ * @returns {Promise<Contact>}
+ */
 function getContact(id) {
   return fetch('/contacts/' + id, { method: 'GET' }).then(function (d) {
     return d.json();
@@ -106,7 +136,7 @@ function getContact(id) {
 
 // App - Data and logic for projections is stored here and passed down to children
 
-var App = (function (_React$Component) {
+var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
   function App() {
@@ -160,7 +190,7 @@ var App = (function (_React$Component) {
         }
         return true;
       }).reduce(function (acc, x) {
-        var key = undefined;
+        var key = void 0;
         switch (_this2.state.group) {
           case 'FIRST':
             key = x.firstName[0];
@@ -215,9 +245,10 @@ var App = (function (_React$Component) {
   }]);
 
   return App;
-})(React.Component);
+}(React.Component);
 
 // AppControl - Controlled components for application state and sorting/order
+
 
 function AppControl(_ref2) {
   var setGroup = _ref2.setGroup;
@@ -257,6 +288,11 @@ function AppControl(_ref2) {
   );
 }
 
+/* ContactGroup
+ * @param {Map[String => []Contacts]} contactGroups - groups of contacts
+ * @param {Function} handleUpdate - forces refetch of all contacts
+ * @returns {JSX.Element}
+ */
 function ContactGroup(_ref3) {
   var contactGroups = _ref3.contactGroups;
   var handleUpdate = _ref3.handleUpdate;
@@ -282,6 +318,11 @@ function ContactGroup(_ref3) {
   );
 }
 
+/* ContactList
+ * @param {[]Contact} contacts
+ * @param {Function} handleUpdate - forces refetch of all contacts
+ * @returns {JSX.Element}
+ */
 function ContactList(_ref4) {
   var contacts = _ref4.contacts;
   var handleUpdate = _ref4.handleUpdate;
@@ -296,7 +337,12 @@ function ContactList(_ref4) {
   );
 }
 
-// Contact - React Component to render individual contact
+/* Contact
+ * @param {Contact} contact
+ * @param {Function} handleUpdate
+ * @param {Function} handleEdit
+ * @returns {JSX.Element}
+ */
 function Contact(_ref5) {
   var firstName = _ref5.firstName;
   var lastName = _ref5.lastName;
@@ -356,6 +402,11 @@ function Contact(_ref5) {
   );
 }
 
+/* IfElse
+ * @param {boolean} predicate
+ * @param {[]JSX.Element} children
+ * @returns {JSX.Element}
+ */
 function IfElse(_ref6) {
   var predicate = _ref6.predicate;
   var children = _ref6.children;
@@ -366,7 +417,12 @@ function IfElse(_ref6) {
   return children[1];
 }
 
-var MainContact = (function (_React$Component2) {
+/* MainContact
+ * @param {Contact} contact
+ * @returns {JSX.Element}
+ */
+
+var MainContact = function (_React$Component2) {
   _inherits(MainContact, _React$Component2);
 
   function MainContact(props) {
@@ -401,17 +457,24 @@ var MainContact = (function (_React$Component2) {
   }]);
 
   return MainContact;
-})(React.Component);
+}(React.Component);
+
+/* EditContact
+ * @param {Contact} contact
+ * @param {Function} handleCancel
+ * @returns {JSX.Element}
+ */
+
 
 function EditContact(_ref7) {
   var contact = _ref7.contact;
   var handleCancel = _ref7.handleCancel;
 
-  var firstNameNode = undefined;
-  var lastNameNode = undefined;
-  var birthDayNode = undefined;
-  var emailNode = undefined;
-  var phoneNode = undefined;
+  var firstNameNode = void 0;
+  var lastNameNode = void 0;
+  var birthDayNode = void 0;
+  var emailNode = void 0;
+  var phoneNode = void 0;
   var handleClick = function handleClick() {
     var birth = birthDayNode.value.trim().split('-');
     var response = {
@@ -433,6 +496,9 @@ function EditContact(_ref7) {
       handleCancel();
     }
   };
+  // Need to format date correctly for form
+  var date = contact.birthYear + '-' + (+contact.birthMonth < 10 ? "0" + contact.birthMonth : contact.birthMonth) + '-' + (+contact.birthDay < 10 ? "0" + contact.birthDay : contact.birthDay);
+  console.log(date);
   return React.createElement(
     'div',
     { className: 'contact' },
@@ -477,8 +543,7 @@ function EditContact(_ref7) {
           ref: function ref(node) {
             return birthDayNode = node;
           },
-          defaultValue: contact.birthYear + '-' + contact.birthMonth + '-' + contact.birthDay
-        })
+          defaultValue: date })
       ),
       React.createElement(
         'span',
@@ -506,16 +571,20 @@ function EditContact(_ref7) {
   );
 }
 
-// AddContact - Contact form which posts new contact to /contacts
+/* AddContact
+ * @params {Function} handleUpdate
+ * @params {Function} handleCancel
+ * @returns {JSX.Element}
+ */
 function AddContact(_ref8) {
   var handleUpdate = _ref8.handleUpdate;
   var handleCancel = _ref8.handleCancel;
 
-  var firstNameNode = undefined;
-  var lastNameNode = undefined;
-  var birthDayNode = undefined;
-  var emailNode = undefined;
-  var phoneNode = undefined;
+  var firstNameNode = void 0;
+  var lastNameNode = void 0;
+  var birthDayNode = void 0;
+  var emailNode = void 0;
+  var phoneNode = void 0;
   var handleClick = function handleClick() {
     var birth = birthDayNode.value.trim().split('-');
     var response = {
