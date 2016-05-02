@@ -29,21 +29,22 @@
 # server
   Server is basically just a handful of routes around contacts.
 
-    Verb | Route | Action
-    -----|-------|-------
-    GET | /contacts | returns all contacts
-    POST | /contacts | adds contact to all contacts
+  Verb | Route | Action
+  -----|-------|-------
+  GET | /contacts | returns all contacts
+  POST | /contacts | adds contact to all contacts
 
-    Delete and Put are not included since the ability to modify or delete the
-    entire contacts list at once seems ... bad.
+  Delete and Put are not included since the ability to modify or delete the
+  entire contacts list at once seems ... bad.
 
-    Verb | Route | Action
-    -----|-------|------
-    GET | /contacts/id | retrieves contact for given id
-    PUT | /contacts/id | updates contact at given id
-    DELETE | /contacts/id | removes contact at given id
 
-    POST is not included since we want the server to determine ids.
+  Verb | Route | Action
+  -----|-------|------
+  GET | /contacts/id | retrieves contact for given id
+  PUT | /contacts/id | updates contact at given id
+  DELETE | /contacts/id | removes contact at given id
+
+  POST is not included since we want the server to determine ids.
 
 # client
   Client is simple React application.  I chose React because, at least for smaller
