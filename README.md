@@ -1,5 +1,5 @@
 # A simple online address book
-  To install, virtualenv and pip install requirements.txt.  The client code is already
+  To install, virtualenv if you want and `pip install -r requirements.txt`.  The client code is already
   built, but to do so just `npm install` and `npm run build`.
 
 # database
