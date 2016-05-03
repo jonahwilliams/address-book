@@ -7,13 +7,13 @@ export default class MainContact extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditing: false,
+      isEditing: false
     };
     this.handleEdit = () => {
-      this.setState({ isEditing: true, });
+      this.setState({ isEditing: true });
     };
     this.handleCancel = () => {
-      this.setState({ isEditing: false, });
+      this.setState({ isEditing: false });
     };
   }
   render() {

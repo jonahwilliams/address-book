@@ -106,4 +106,4 @@ def specific_contact(contact_id):
             return "", 404
 
 if __name__=='__main__':
-    app.run()
+    app.run(debug=True)

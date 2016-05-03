@@ -1,3 +1,28 @@
+body {
+  font-family: 'Montserrat';
+  background-color: #f3f2f1;
+  color: #252525;
+}
+
+.header {
+  position: fixed;
+  top: 0px;
+  margin: auto;
+  z-index: 100;
+  width:100%;
+  color: #f3f2f1;
+  background-color: #4d79ff;
+}
+
+.content {
+  margin-top: 120px;
+}
+
+input {
+  border: 0px;
+  font-family: 'Montserrat';
+}
+
 .title {
   font-size: 3em;
   display: flex;
@@ -7,25 +32,36 @@
 
 .app-control {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 20px;
+  justify-content: center;
 }
 
-.app-control-item {
+.control-item {
   flex-direction: row;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin: 0px;
   max-width: 200px;
 }
 
+input.control-item  {
+  width: 200px;
+  border: 0px;
+}
+input.control-item {
+  border: 0px;
+}
+
 .contact {
+  margin: 0px;
   display: flex;
   flex-direction: column;
-  border: 1px solid lightgrey;
-  margin: 2px;
   padding: 5px;
+  background-color: white;
+  border: 1px solid #f0f0f0;
 }
+
 
 .head {
   display: flex;
@@ -45,14 +81,55 @@
 }
 
 .add-contact {
-  border: 1px solid grey;
+  align-self: center;
+  margin: 0px;
   margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .add-item {
   display: flex;
   flex-direction: column;
+  align-self: center;
+  width: 33%;
+}
+
+.group-label {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+  padding-top: 5px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #4d79ff;
+}
+
+.group-name {
+  margin-left: 10px;
+  color: #f3f2f1;
+  font-size: 1.2em;
+}
+
+.custom-button {
+  text-align: center;
+  display: inline;
+  border: 1px solid lightgrey;
+  font-size: 0.8em;
+  margin: 2px;
+  cursor: default;
+  color: #252525;
+  padding: 2px;
+}
+
+.custom-button:hover {
+  border: 1px solid #f3f2f1;
+  color: white;
+  background-color: #4d79ff;
 }

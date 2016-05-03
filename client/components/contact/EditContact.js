@@ -1,10 +1,11 @@
 import * as api from '../../api';
+import Button from '../shared/Button';
 /* EditContact
  * @param {Contact} contact
  * @param {Function} handleCancel
  * @returns {JSX.Element}
  */
-export default function EditContact({ contact, handleCancel, }) {
+export default function EditContact({ contact, handleCancel }) {
   let firstNameNode;
   let lastNameNode;
   let birthDayNode;
@@ -19,7 +20,7 @@ export default function EditContact({ contact, handleCancel, }) {
       birthMonth: birth[1],
       birthYear: birth[0],
       email: emailNode.value.trim(),
-      phone: phoneNode.value.trim(),
+      phone: phoneNode.value.trim()
     };
     if (response.firstName !== '') {
       firstNameNode.value = '';
@@ -45,21 +46,27 @@ export default function EditContact({ contact, handleCancel, }) {
   return (
     <div className="contact">
       <div className="head">
+        <span>
+        {'First Name:'}
         <input type="text"
           ref={node => firstNameNode = node}
           defaultValue={contact.firstName}
           />
+        </span>
+        <span>
+        {"Last Name:"}
         <input type="text"
           ref={node => lastNameNode = node}
           defaultValue={contact.lastName}
           />
+       </span>
         <div>
-          <button onClick={handleClick}>
+          <Button handleClick={handleClick}>
             {"SAVE"}
-          </button>
-          <button onClick={handleCancel}>
+          </Button>
+          <Button handleClick={handleCancel}>
             {"CANCEL"}
-          </button>
+          </Button>
         </div>
       </div>
       <div className="rest">

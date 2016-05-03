@@ -1,10 +1,12 @@
 import * as api from '../../api';
+import Button from '../shared/Button';
+
 /* AddContact - needs to be class to be testable by jest
  * @params {Function} handleUpdate
  * @params {Function} handleCancel
  * @returns {JSX.Element}
  */
-export default function AddContact({ handleUpdate, handleCancel, }) {
+export default function AddContact({ handleUpdate, handleCancel }) {
   let firstNameNode;
   let lastNameNode;
   let birthDayNode;
@@ -19,7 +21,7 @@ export default function AddContact({ handleUpdate, handleCancel, }) {
       birthMonth: birth[1],
       birthYear: birth[0],
       email: emailNode.value.trim(),
-      phone: phoneNode.value.trim(),
+      phone: phoneNode.value.trim()
     };
     if (response.firstName !== '') {
       firstNameNode.value = '';
@@ -41,7 +43,6 @@ export default function AddContact({ handleUpdate, handleCancel, }) {
           placeholder="Last Name"
           ref={node => lastNameNode = node}
         />
-        {'Birthday'}
         <input type="date"
           ref={node => birthDayNode = node}
         />
@@ -54,13 +55,13 @@ export default function AddContact({ handleUpdate, handleCancel, }) {
           ref={node => phoneNode = node}
         />
       <div>
-        <button onClick={handleClick}>
-          {'Add'}
-        </button>
-        <button onClick={handleCancel}>
-          {'Cancel'}
-        </button>
+        <Button handleClick={handleClick}>
+          {'ADD'}
+        </Button>
+        <Button handleClick={handleCancel}>
+          {'CANCEL'}
+        </Button>
       </div>
     </div>
-    </div>);
+  </div>);
 }

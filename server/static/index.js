@@ -65,6 +65,44 @@
     return call && (typeof call === "object" || typeof call === "function") ? call : self;
   };
 
+  babelHelpers.slicedToArray = function () {
+    function sliceIterator(arr, i) {
+      var _arr = [];
+      var _n = true;
+      var _d = false;
+      var _e = undefined;
+
+      try {
+        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+          _arr.push(_s.value);
+
+          if (i && _arr.length === i) break;
+        }
+      } catch (err) {
+        _d = true;
+        _e = err;
+      } finally {
+        try {
+          if (!_n && _i["return"]) _i["return"]();
+        } finally {
+          if (_d) throw _e;
+        }
+      }
+
+      return _arr;
+    }
+
+    return function (arr, i) {
+      if (Array.isArray(arr)) {
+        return arr;
+      } else if (Symbol.iterator in Object(arr)) {
+        return sliceIterator(arr, i);
+      } else {
+        throw new TypeError("Invalid attempt to destructure non-iterable instance");
+      }
+    };
+  }();
+
   babelHelpers.toConsumableArray = function (arr) {
     if (Array.isArray(arr)) {
       for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
@@ -177,6 +215,18 @@
     });
   }
 
+  function Button(_ref) {
+    var handleClick = _ref.handleClick;
+    var children = _ref.children;
+
+    return React.createElement(
+      'div',
+      { className: 'custom-button',
+        onClick: handleClick },
+      children
+    );
+  }
+
   /* AddContact - needs to be class to be testable by jest
    * @params {Function} handleUpdate
    * @params {Function} handleCancel
@@ -229,7 +279,6 @@
             return lastNameNode = node;
           }
         }),
-        'Birthday',
         React.createElement('input', { type: 'date',
           ref: function ref(node) {
             return birthDayNode = node;
@@ -251,14 +300,14 @@
           'div',
           null,
           React.createElement(
-            'button',
-            { onClick: handleClick },
-            'Add'
+            Button,
+            { handleClick: handleClick },
+            'ADD'
           ),
           React.createElement(
-            'button',
-            { onClick: handleCancel },
-            'Cancel'
+            Button,
+            { handleClick: handleCancel },
+            'CANCEL'
           )
         )
       )
@@ -308,29 +357,39 @@
       React.createElement(
         'div',
         { className: 'head' },
-        React.createElement('input', { type: 'text',
-          ref: function ref(node) {
-            return firstNameNode = node;
-          },
-          defaultValue: contact.firstName
-        }),
-        React.createElement('input', { type: 'text',
-          ref: function ref(node) {
-            return lastNameNode = node;
-          },
-          defaultValue: contact.lastName
-        }),
+        React.createElement(
+          'span',
+          null,
+          'First Name:',
+          React.createElement('input', { type: 'text',
+            ref: function ref(node) {
+              return firstNameNode = node;
+            },
+            defaultValue: contact.firstName
+          })
+        ),
+        React.createElement(
+          'span',
+          null,
+          "Last Name:",
+          React.createElement('input', { type: 'text',
+            ref: function ref(node) {
+              return lastNameNode = node;
+            },
+            defaultValue: contact.lastName
+          })
+        ),
         React.createElement(
           'div',
           null,
           React.createElement(
-            'button',
-            { onClick: handleClick },
+            Button,
+            { handleClick: handleClick },
             "SAVE"
           ),
           React.createElement(
-            'button',
-            { onClick: handleCancel },
+            Button,
+            { handleClick: handleCancel },
             "CANCEL"
           )
         )
@@ -396,44 +455,44 @@
       deleteContact(id).then(handleUpdate);
     };
     return React.createElement(
-      "div",
-      { className: "contact" },
+      'div',
+      { className: 'contact' },
       React.createElement(
-        "div",
-        { className: "head" },
-        firstName + " " + lastName,
+        'div',
+        { className: 'head' },
+        firstName + ' ' + lastName,
         React.createElement(
-          "div",
+          'div',
           null,
           React.createElement(
-            "button",
-            { onClick: handleEdit },
+            Button,
+            { handleClick: handleEdit },
             "EDIT"
           ),
           React.createElement(
-            "button",
-            { onClick: handleClick },
+            Button,
+            { handleClick: handleClick },
             "DELETE"
           )
         )
       ),
       React.createElement(
-        "div",
-        { className: "rest" },
+        'div',
+        { className: 'rest' },
         React.createElement(
-          "span",
+          'span',
           null,
-          "Birthday: " + birthMonth + "-" + birthDay + "-" + birthYear
+          'Birthday: ' + birthMonth + '-' + birthDay + '-' + birthYear
         ),
         React.createElement(
-          "span",
+          'span',
           null,
-          "Email: " + email
+          'Email: ' + email
         ),
         React.createElement(
-          "span",
+          'span',
           null,
-          "Phone: " + phone
+          'Phone: ' + phone
         )
       )
     );
@@ -514,28 +573,63 @@
    * @param {Function} handleUpdate - forces refetch of all contacts
    * @returns {JSX.Element}
    */
-  function ContactGroup(_ref) {
-    var contactGroups = _ref.contactGroups;
-    var handleUpdate = _ref.handleUpdate;
 
-    var groups = [].concat(babelHelpers.toConsumableArray(contactGroups)).map(function (d, i) {
-      return React.createElement(
-        'div',
-        { className: 'group-label', key: i },
-        React.createElement(
-          'span',
-          { className: 'group-name' },
-          d[0].toString()
-        ),
-        React.createElement(ContactList, { contacts: d[1], handleUpdate: handleUpdate })
-      );
-    });
-    return React.createElement(
-      'div',
-      { className: 'contact-group' },
-      groups
-    );
+  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Novemeber', 'December'];
+
+  function makeKey(x) {
+    if (typeof x === 'number') {
+      return months[x - 1];
+    }
+    return x.toUpperCase();
   }
+
+  var ContactGroup = function (_React$Component) {
+    babelHelpers.inherits(ContactGroup, _React$Component);
+
+    function ContactGroup(props) {
+      babelHelpers.classCallCheck(this, ContactGroup);
+      return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(ContactGroup).call(this, props));
+    }
+
+    babelHelpers.createClass(ContactGroup, [{
+      key: 'render',
+      value: function render() {
+        var _props = this.props;
+        var contactGroups = _props.contactGroups;
+        var handleUpdate = _props.handleUpdate;
+
+        var groups = [].concat(babelHelpers.toConsumableArray(contactGroups)).sort(function (_ref, _ref2) {
+          var _ref4 = babelHelpers.slicedToArray(_ref, 1);
+
+          var k1 = _ref4[0];
+
+          var _ref3 = babelHelpers.slicedToArray(_ref2, 1);
+
+          var k2 = _ref3[0];
+
+          return k1 > k2;
+        }).map(function (d, i) {
+          return React.createElement(
+            'div',
+            { className: 'group-label', key: i },
+            React.createElement(
+              'span',
+              { className: 'group-name' },
+              makeKey(d[0])
+            ),
+            React.createElement(ContactList, { contacts: d[1],
+              handleUpdate: handleUpdate })
+          );
+        });
+        return React.createElement(
+          'div',
+          { className: 'contact-group' },
+          groups
+        );
+      }
+    }]);
+    return ContactGroup;
+  }(React.Component);
 
   function AppControl(_ref) {
     var setGroup = _ref.setGroup;
@@ -546,7 +640,11 @@
     return React.createElement(
       "div",
       { className: "app-control" },
-      React.createElement("input", { className: "control-item", type: "text", value: filter, onChange: setFilter }),
+      React.createElement("input", { className: "control-item",
+        type: "text",
+        value: filter,
+        placeholder: "SEARCH CONTACTS",
+        onChange: setFilter }),
       React.createElement(
         "select",
         { className: "control-item", value: group, onChange: setGroup },
@@ -588,11 +686,11 @@
 
     if (asc) {
       return xs.sort(function (a, b) {
-        return key(a) < key(b);
+        return key(a) > key(b);
       });
     }
     return xs.sort(function (a, b) {
-      return key(a) > key(b);
+      return key(a) < key(b);
     });
   }
 
@@ -703,42 +801,58 @@
         });
         var transformed = groupBy(orderBy(contacts, function (a) {
           return a.firstName[0].toLowerCase();
-        }, false), groupKey);
+        }), groupKey);
 
         return React.createElement(
           'div',
           { className: 'app' },
           React.createElement(
             'div',
-            { className: 'title' },
-            'Address Book'
-          ),
-          React.createElement(AppControl, {
-            group: this.state.group,
-            order: this.state.order,
-            filter: this.state.filter,
-            setGroup: this.setGroup,
-            setFilter: this.setFilter,
-            setOrder: this.setOrder
-          }),
-          React.createElement(
-            IfElse,
-            { predicate: this.state.showAdd },
-            React.createElement(AddContact, {
-              handleUpdate: this.handleUpdate,
-              handleCancel: function handleCancel() {
-                return _this2.setState({ showAdd: false });
-              } }),
+            { className: 'header' },
             React.createElement(
-              'button',
-              { onClick: function onClick() {
-                  return _this2.setState({ showAdd: true });
-                } },
-              'New Contact'
-            )
+              'div',
+              { className: 'title' },
+              'ADDRSSR'
+            ),
+            React.createElement(AppControl, {
+              group: this.state.group,
+              order: this.state.order,
+              filter: this.state.filter,
+              setGroup: this.setGroup,
+              setFilter: this.setFilter,
+              setOrder: this.setOrder
+            })
           ),
-          React.createElement(ContactGroup, { contactGroups: transformed,
-            handleUpdate: this.handleUpdate })
+          React.createElement(
+            'div',
+            { className: 'content' },
+            React.createElement(
+              IfElse,
+              { predicate: this.state.showAdd },
+              React.createElement(AddContact, {
+                handleUpdate: this.handleUpdate,
+                handleCancel: function handleCancel() {
+                  return _this2.setState({ showAdd: false });
+                } }),
+              React.createElement(
+                'div',
+                { className: 'add-contact' },
+                React.createElement(
+                  'div',
+                  { className: 'add-item' },
+                  React.createElement(
+                    Button,
+                    { handleClick: function handleClick() {
+                        return _this2.setState({ showAdd: true });
+                      } },
+                    'NEW CONTACT'
+                  )
+                )
+              )
+            ),
+            React.createElement(ContactGroup, { contactGroups: transformed,
+              handleUpdate: this.handleUpdate })
+          )
         );
       }
     }]);

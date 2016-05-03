@@ -1,4 +1,6 @@
 import * as api from '../../api';
+import Button from '../shared/Button';
+
 /* Contact
  * @param {Contact} contact
  * @param {Function} handleUpdate
@@ -6,7 +8,7 @@ import * as api from '../../api';
  * @returns {JSX.Element}
  */
 export default function Contact({ firstName, lastName, birthDay,
-  birthMonth, birthYear, email, phone, id, handleUpdate, handleEdit, }) {
+  birthMonth, birthYear, email, phone, id, handleUpdate, handleEdit }) {
   const handleClick = function handleClick() {
     api.deleteContact(id).then(handleUpdate);
   };
@@ -15,12 +17,12 @@ export default function Contact({ firstName, lastName, birthDay,
       <div className="head">
         {`${firstName} ${lastName}`}
         <div>
-          <button onClick={handleEdit}>
+          <Button handleClick={handleEdit}>
             {"EDIT"}
-          </button>
-          <button onClick={handleClick}>
+          </Button>
+          <Button handleClick={handleClick}>
             {"DELETE"}
-          </button>
+          </Button>
         </div>
       </div>
       <div className="rest">
