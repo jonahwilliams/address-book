@@ -1,5 +1,5 @@
 # A simple online address book
-  To install, virtualenv and pip install requirements.txt.  The client code is already
+  To install, virtualenv if you want and `pip install -r requirements.txt`.  The client code is already
   built, but to do so just `npm install` and `npm run build`.
 
 # database
@@ -20,30 +20,32 @@
   ----|---------
   id | Int primary key
   name | text
-  birthday | text
+  birth_day | int
+  birth_month | int
+  birth_year | int
   email | text
-  address | text
   phone | text
 
 
 # server
   Server is basically just a handful of routes around contacts.
 
-    Verb | Route | Action
-    -----|-------|-------
-    GET | /contacts | returns all contacts
-    POST | /contacts | adds contact to all contacts
+  Verb | Route | Action
+  -----|-------|-------
+  GET | /contacts | returns all contacts
+  POST | /contacts | adds contact to all contacts
 
-    Delete and Put are not included since the ability to modify or delete the
-    entire contacts list at once seems ... bad.
+  Delete and Put are not included since the ability to modify or delete the
+  entire contacts list at once seems ... bad.
 
-    Verb | Route | Action
-    -----|-------|------
-    GET | /contacts/id | retrieves contact for given id
-    PUT | /contacts/id | updates contact at given id
-    DELETE | /contacts/id | removes contact at given id
 
-    POST is not included since we want the server to determine ids.
+  Verb | Route | Action
+  -----|-------|------
+  GET | /contacts/id | retrieves contact for given id
+  PUT | /contacts/id | updates contact at given id
+  DELETE | /contacts/id | removes contact at given id
+
+  POST is not included since we want the server to determine ids.
 
 # client
   Client is simple React application.  I chose React because, at least for smaller
