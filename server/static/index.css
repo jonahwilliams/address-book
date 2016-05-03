@@ -12,6 +12,7 @@ body {
   width:100%;
   color: #f3f2f1;
   background-color: #4d79ff;
+  border: 1px solid white;
 }
 
 .content {
