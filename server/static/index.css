@@ -111,6 +111,10 @@ input.control-item {
   background-color: #4d79ff;
 }
 
+.group-label:hover {
+  background-color: #b3c6ff
+}
+
 .group-name {
   margin-left: 10px;
   color: #f3f2f1;

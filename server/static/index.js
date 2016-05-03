@@ -65,44 +65,6 @@
     return call && (typeof call === "object" || typeof call === "function") ? call : self;
   };
 
-  babelHelpers.slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
-
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
-
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
-
-      return _arr;
-    }
-
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
-
   babelHelpers.toConsumableArray = function (arr) {
     if (Array.isArray(arr)) {
       for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
@@ -554,19 +516,34 @@
    * @param {Function} handleUpdate - forces refetch of all contacts
    * @returns {JSX.Element}
    */
-  function ContactList(_ref) {
-    var contacts = _ref.contacts;
-    var handleUpdate = _ref.handleUpdate;
 
-    var inner = contacts.map(function (d, i) {
-      return React.createElement(MainContact, babelHelpers.extends({ key: i, handleUpdate: handleUpdate }, d));
-    });
-    return React.createElement(
-      "div",
-      { className: "contact-list" },
-      inner
-    );
-  }
+  var ContactList = function (_React$Component) {
+    babelHelpers.inherits(ContactList, _React$Component);
+
+    function ContactList(props) {
+      babelHelpers.classCallCheck(this, ContactList);
+      return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(ContactList).call(this, props));
+    }
+
+    babelHelpers.createClass(ContactList, [{
+      key: "render",
+      value: function render() {
+        var _props = this.props;
+        var contacts = _props.contacts;
+        var handleUpdate = _props.handleUpdate;
+
+        var inner = contacts.map(function (d, i) {
+          return React.createElement(MainContact, babelHelpers.extends({ key: i, handleUpdate: handleUpdate }, d));
+        });
+        return React.createElement(
+          "div",
+          { className: "contact-list" },
+          inner
+        );
+      }
+    }]);
+    return ContactList;
+  }(React.Component);
 
   /* ContactGroup
    * @param {Map[String => []Contacts]} contactGroups - groups of contacts
@@ -583,48 +560,92 @@
     return x.toUpperCase();
   }
 
-  var ContactGroup = function (_React$Component) {
-    babelHelpers.inherits(ContactGroup, _React$Component);
+  var ContactGroupList = function (_React$Component) {
+    babelHelpers.inherits(ContactGroupList, _React$Component);
 
-    function ContactGroup(props) {
-      babelHelpers.classCallCheck(this, ContactGroup);
-      return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(ContactGroup).call(this, props));
+    function ContactGroupList(props) {
+      babelHelpers.classCallCheck(this, ContactGroupList);
+      return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(ContactGroupList).call(this, props));
     }
 
-    babelHelpers.createClass(ContactGroup, [{
+    babelHelpers.createClass(ContactGroupList, [{
       key: 'render',
       value: function render() {
         var _props = this.props;
         var contactGroups = _props.contactGroups;
         var handleUpdate = _props.handleUpdate;
 
-        var groups = [].concat(babelHelpers.toConsumableArray(contactGroups)).sort(function (_ref, _ref2) {
-          var _ref4 = babelHelpers.slicedToArray(_ref, 1);
-
-          var k1 = _ref4[0];
-
-          var _ref3 = babelHelpers.slicedToArray(_ref2, 1);
-
-          var k2 = _ref3[0];
-
-          return k1 > k2;
+        var groups = [].concat(babelHelpers.toConsumableArray(contactGroups)).sort(function (a, b) {
+          if (typeof a[0] === 'string') {
+            if (a[0].toLowerCase() < b[0].toLowerCase()) return -1;else if (a[0].toLowerCase() > b[0].toLowerCase()) return 1;
+            return 0;
+          }
+          return a[0] - b[0];
         }).map(function (d, i) {
-          return React.createElement(
-            'div',
-            { className: 'group-label', key: i },
-            React.createElement(
-              'span',
-              { className: 'group-name' },
-              makeKey(d[0])
-            ),
-            React.createElement(ContactList, { contacts: d[1],
-              handleUpdate: handleUpdate })
-          );
+          return React.createElement(ContactGroup, { key: i,
+            handleUpdate: handleUpdate,
+            hashKey: d[0],
+            values: d[1] });
         });
         return React.createElement(
           'div',
           { className: 'contact-group' },
           groups
+        );
+      }
+    }]);
+    return ContactGroupList;
+  }(React.Component);
+
+  var ContactGroup = function (_React$Component2) {
+    babelHelpers.inherits(ContactGroup, _React$Component2);
+
+    function ContactGroup(props) {
+      babelHelpers.classCallCheck(this, ContactGroup);
+
+      var _this2 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(ContactGroup).call(this, props));
+
+      _this2.state = {
+        open: false
+      };
+      _this2.handleOpen = function (e) {
+        if (e.target.id === _this2.props.hashKey.toString() || e.target.id === _this2.props.hashKey.toString() + "-c") {
+          _this2.setState({ open: !_this2.state.open });
+        }
+      };
+      return _this2;
+    }
+
+    babelHelpers.createClass(ContactGroup, [{
+      key: 'render',
+      value: function render() {
+        if (this.state.open || this.props.hashKey === '') {
+          return React.createElement(
+            'div',
+            { className: 'group-label',
+              id: this.props.hashKey + "-c",
+              onClick: this.handleOpen },
+            React.createElement(
+              'span',
+              { className: 'group-name',
+                id: this.props.hashKey },
+              makeKey(this.props.hashKey)
+            ),
+            React.createElement(ContactList, { contacts: this.props.values,
+              handleUpdate: this.props.handleUpdate })
+          );
+        }
+        return React.createElement(
+          'div',
+          { className: 'group-label',
+            id: this.props.hashKey + "-c",
+            onClick: this.handleOpen },
+          React.createElement(
+            'span',
+            { className: 'group-name',
+              id: this.props.hashKey },
+            makeKey(this.props.hashKey)
+          )
         );
       }
     }]);
@@ -686,11 +707,21 @@
 
     if (asc) {
       return xs.sort(function (a, b) {
-        return key(a) > key(b);
+        if (key(a) > key(b)) {
+          return 1;
+        } else if (key(a) < key(b)) {
+          return -1;
+        }
+        return 0;
       });
     }
     return xs.sort(function (a, b) {
-      return key(a) < key(b);
+      if (key(a) > key(b)) {
+        return -1;
+      } else if (key(a) < key(b)) {
+        return 1;
+      }
+      return 0;
     });
   }
 
@@ -850,7 +881,7 @@
                 )
               )
             ),
-            React.createElement(ContactGroup, { contactGroups: transformed,
+            React.createElement(ContactGroupList, { contactGroups: transformed,
               handleUpdate: this.handleUpdate })
           )
         );

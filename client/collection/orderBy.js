@@ -6,7 +6,21 @@
  */
 export default function orderBy(xs, key=(x) => x, asc=true) {
   if (asc) {
-    return xs.sort((a, b) => key(a) > key(b));
+    return xs.sort((a, b) => {
+      if (key(a) > key(b)) {
+        return 1;
+      } else if (key(a) < key(b)) {
+        return -1;
+      }
+      return 0;
+    });
   }
-  return xs.sort((a, b) => key(a) < key(b));
+  return xs.sort((a, b) => {
+    if (key(a) > key(b)) {
+      return -1;
+    } else if (key(a) < key(b)) {
+      return 1;
+    }
+    return 0;
+  });
 }

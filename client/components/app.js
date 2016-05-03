@@ -1,7 +1,7 @@
 /* global React */
 import * as api from '../api';
 import AddContact from './contact/AddContact';
-import ContactGroup from './contact/ContactGroup';
+import ContactGroupList from './contact/ContactGroup';
 import IfElse from './shared/IfElse';
 import Controls from './controls/Controls';
 import orderBy from '../collection/orderBy';
@@ -84,7 +84,7 @@ export default class App extends React.Component {
               </div>
             </div>
           </IfElse>
-          <ContactGroup contactGroups={transformed}
+          <ContactGroupList contactGroups={transformed}
             handleUpdate={this.handleUpdate}/>
         </div>
       </div>
