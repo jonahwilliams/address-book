@@ -220,7 +220,7 @@
         email: emailNode.value.trim(),
         phone: phoneNode.value.trim()
       };
-      if (response.firstName !== '') {
+      if (response.firstName !== '' && response.lastName !== '' && response.birthMonth !== '') {
         firstNameNode.value = '';
         lastNameNode.value = '';
         birthDayNode.value = '';
