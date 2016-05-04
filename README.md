@@ -1,4 +1,9 @@
 # A simple online address book
+
+  <img src=".addrssr.png"></img>
+
+
+# Install and Setup
   To install, virtualenv if you want and `pip install -r requirements.txt`.  The client code is already
   built, but to do so just `npm install` and `npm run build`.  To run the client tests, run `npm run test`.
 
