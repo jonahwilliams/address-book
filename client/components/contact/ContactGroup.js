@@ -1,4 +1,4 @@
-/* global React */
+import React from 'react';
 import ContactList from './ContactList';
 /* ContactGroup
  * @param {Map[String => []Contacts]} contactGroups - groups of contacts

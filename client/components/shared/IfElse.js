@@ -1,3 +1,4 @@
+import React from 'react';
 /* IfElse
  * @param {boolean} predicate
  * @param {[]JSX.Element} children

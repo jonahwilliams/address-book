@@ -83,7 +83,6 @@ input.control-item {
 
 .add-contact {
   align-self: center;
-  margin: 0px;
   margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
@@ -92,6 +91,8 @@ input.control-item {
 }
 
 .add-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-self: center;

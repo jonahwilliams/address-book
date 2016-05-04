@@ -1,5 +1,6 @@
 import * as api from '../../api';
 import Button from '../shared/Button';
+import React from 'react';
 
 /* Contact
  * @param {Contact} contact

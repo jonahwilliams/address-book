@@ -1,5 +1,6 @@
 import * as api from '../../api';
 import Button from '../shared/Button';
+import React from 'react';
 
 /* AddContact - needs to be class to be testable by jest
  * @params {Function} handleUpdate

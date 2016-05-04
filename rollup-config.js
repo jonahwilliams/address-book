@@ -2,6 +2,9 @@ import babel from 'rollup-plugin-babel';
 
 export default {
   entry: 'client/index.js',
-  plugins: [ babel(), ],
-  format: 'iife',
+  globals: {
+    'react': 'React'
+  },
+  plugins: [ babel() ],
+  format: 'iife'
 };

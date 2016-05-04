@@ -1,4 +1,4 @@
-/* global React */
+import React from 'react';
 import MainContact from './MainContact';
 /* ContactList
  * @param {[]Contact} contacts

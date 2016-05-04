@@ -4,14 +4,15 @@
   "description": "a simple online address book",
   "main": "index.js",
   "scripts": {
-    "build": "babel server/static/index.jsx -o server/static/index.js",
-    "test": "jest"
+    "build": "BABEL_ENV=build rollup -c rollup-config.js -o server/static/index.js",
+    "test": "BABEL_ENV=test jest "
   },
   "keywords": [
     "React",
     "Address",
     "Python"
   ],
+  "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
   "author": "Jonah Willaims",
   "license": "ISC",
   "dependencies": {
@@ -29,6 +30,7 @@
     "eslint-plugin-react": "^5.0.1",
     "jest": "^0.1.40",
     "jest-cli": "^12.0.2",
+    "react-addons-test-utils": "^15.0.2",
     "rollup": "^0.26.1",
     "rollup-plugin-babel": "^2.4.0"
   }

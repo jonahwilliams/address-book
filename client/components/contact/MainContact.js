@@ -1,4 +1,4 @@
-/* global React */
+import React from 'react';
 import EditContact from './EditContact';
 import Contact from './Contact';
 import IfElse from '../shared/IfElse';

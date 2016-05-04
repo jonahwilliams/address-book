@@ -1,5 +1,7 @@
-(function () {
+(function (React$1) {
   'use strict';
+
+  React$1 = 'default' in React$1 ? React$1['default'] : React$1;
 
   var babelHelpers = {};
 
@@ -177,11 +179,15 @@
     });
   }
 
+  /* Button
+   * @param {Function} handleClick
+   * @param {Array<JSX.Element>} children
+   */
   function Button(_ref) {
     var handleClick = _ref.handleClick;
     var children = _ref.children;
 
-    return React.createElement(
+    return React$1.createElement(
       'div',
       { className: 'custom-button',
         onClick: handleClick },
@@ -223,50 +229,50 @@
         addContact(response).then(handleUpdate);
       }
     };
-    return React.createElement(
+    return React$1.createElement(
       'div',
       { className: 'add-contact' },
-      React.createElement(
+      React$1.createElement(
         'div',
         { className: 'add-item' },
-        React.createElement('input', { type: 'text',
+        React$1.createElement('input', { type: 'text',
           ref: function ref(node) {
             return firstNameNode = node;
           },
           placeholder: 'First Name'
         }),
-        React.createElement('input', { type: 'text',
+        React$1.createElement('input', { type: 'text',
           placeholder: 'Last Name',
           ref: function ref(node) {
             return lastNameNode = node;
           }
         }),
-        React.createElement('input', { type: 'date',
+        React$1.createElement('input', { type: 'date',
           ref: function ref(node) {
             return birthDayNode = node;
           }
         }),
-        React.createElement('input', { type: 'email',
+        React$1.createElement('input', { type: 'email',
           placeholder: 'email',
           ref: function ref(node) {
             return emailNode = node;
           }
         }),
-        React.createElement('input', { type: 'phone',
+        React$1.createElement('input', { type: 'phone',
           placeholder: 'phone',
           ref: function ref(node) {
             return phoneNode = node;
           }
         }),
-        React.createElement(
+        React$1.createElement(
           'div',
           null,
-          React.createElement(
+          React$1.createElement(
             Button,
             { handleClick: handleClick },
             'ADD'
           ),
-          React.createElement(
+          React$1.createElement(
             Button,
             { handleClick: handleCancel },
             'CANCEL'
@@ -313,78 +319,78 @@
     };
     // Need to format date correctly for form
     var date = contact.birthYear + '-' + (+contact.birthMonth < 10 ? "0" + contact.birthMonth : contact.birthMonth) + '-' + (+contact.birthDay < 10 ? "0" + contact.birthDay : contact.birthDay);
-    return React.createElement(
+    return React$1.createElement(
       'div',
       { className: 'contact' },
-      React.createElement(
+      React$1.createElement(
         'div',
         { className: 'head' },
-        React.createElement(
+        React$1.createElement(
           'span',
           null,
           'First Name:',
-          React.createElement('input', { type: 'text',
+          React$1.createElement('input', { type: 'text',
             ref: function ref(node) {
               return firstNameNode = node;
             },
             defaultValue: contact.firstName
           })
         ),
-        React.createElement(
+        React$1.createElement(
           'span',
           null,
           "Last Name:",
-          React.createElement('input', { type: 'text',
+          React$1.createElement('input', { type: 'text',
             ref: function ref(node) {
               return lastNameNode = node;
             },
             defaultValue: contact.lastName
           })
         ),
-        React.createElement(
+        React$1.createElement(
           'div',
           null,
-          React.createElement(
+          React$1.createElement(
             Button,
             { handleClick: handleClick },
             "SAVE"
           ),
-          React.createElement(
+          React$1.createElement(
             Button,
             { handleClick: handleCancel },
             "CANCEL"
           )
         )
       ),
-      React.createElement(
+      React$1.createElement(
         'div',
         { className: 'rest' },
-        React.createElement(
+        React$1.createElement(
           'span',
           null,
           'Birthday:',
-          React.createElement('input', { type: 'date',
+          React$1.createElement('input', { type: 'date',
             ref: function ref(node) {
               return birthDayNode = node;
             },
             defaultValue: date })
         ),
-        React.createElement(
+        React$1.createElement(
           'span',
           null,
           'Email:',
-          React.createElement('input', { type: 'text',
+          React$1.createElement('input', { type: 'text',
             ref: function ref(node) {
               return emailNode = node;
             },
             defaultValue: contact.email
           })
         ),
-        React.createElement(
+        React$1.createElement(
           'span',
           null,
           'Phone:',
-          React.createElement('input', { type: 'text',
+          React$1.createElement('input', { type: 'text',
             ref: function ref(node) {
               return phoneNode = node;
             },
@@ -416,42 +422,42 @@
     var handleClick = function handleClick() {
       deleteContact(id).then(handleUpdate);
     };
-    return React.createElement(
+    return React$1.createElement(
       'div',
       { className: 'contact' },
-      React.createElement(
+      React$1.createElement(
         'div',
         { className: 'head' },
         firstName + ' ' + lastName,
-        React.createElement(
+        React$1.createElement(
           'div',
           null,
-          React.createElement(
+          React$1.createElement(
             Button,
             { handleClick: handleEdit },
             "EDIT"
           ),
-          React.createElement(
+          React$1.createElement(
             Button,
             { handleClick: handleClick },
             "DELETE"
           )
         )
       ),
-      React.createElement(
+      React$1.createElement(
         'div',
         { className: 'rest' },
-        React.createElement(
+        React$1.createElement(
           'span',
           null,
           'Birthday: ' + birthMonth + '-' + birthDay + '-' + birthYear
         ),
-        React.createElement(
+        React$1.createElement(
           'span',
           null,
           'Email: ' + email
         ),
-        React.createElement(
+        React$1.createElement(
           'span',
           null,
           'Phone: ' + phone
@@ -498,18 +504,18 @@
     babelHelpers.createClass(MainContact, [{
       key: 'render',
       value: function render() {
-        return React.createElement(
+        return React$1.createElement(
           IfElse,
           { predicate: this.state.isEditing },
-          React.createElement(EditContact, { handleCancel: this.handleCancel,
+          React$1.createElement(EditContact, { handleCancel: this.handleCancel,
             contact: this.props }),
-          React.createElement(Contact, babelHelpers.extends({ handleEdit: this.handleEdit
+          React$1.createElement(Contact, babelHelpers.extends({ handleEdit: this.handleEdit
           }, this.props))
         );
       }
     }]);
     return MainContact;
-  }(React.Component);
+  }(React$1.Component);
 
   /* ContactList
    * @param {[]Contact} contacts
@@ -526,24 +532,24 @@
     }
 
     babelHelpers.createClass(ContactList, [{
-      key: "render",
+      key: 'render',
       value: function render() {
         var _props = this.props;
         var contacts = _props.contacts;
         var handleUpdate = _props.handleUpdate;
 
         var inner = contacts.map(function (d, i) {
-          return React.createElement(MainContact, babelHelpers.extends({ key: i, handleUpdate: handleUpdate }, d));
+          return React$1.createElement(MainContact, babelHelpers.extends({ key: i, handleUpdate: handleUpdate }, d));
         });
-        return React.createElement(
-          "div",
-          { className: "contact-list" },
+        return React$1.createElement(
+          'div',
+          { className: 'contact-list' },
           inner
         );
       }
     }]);
     return ContactList;
-  }(React.Component);
+  }(React$1.Component);
 
   /* ContactGroup
    * @param {Map[String => []Contacts]} contactGroups - groups of contacts
@@ -582,12 +588,12 @@
           }
           return a[0] - b[0];
         }).map(function (d, i) {
-          return React.createElement(ContactGroup, { key: i,
+          return React$1.createElement(ContactGroup, { key: i,
             handleUpdate: handleUpdate,
             hashKey: d[0],
             values: d[1] });
         });
-        return React.createElement(
+        return React$1.createElement(
           'div',
           { className: 'contact-group' },
           groups
@@ -595,7 +601,7 @@
       }
     }]);
     return ContactGroupList;
-  }(React.Component);
+  }(React$1.Component);
 
   var ContactGroup = function (_React$Component2) {
     babelHelpers.inherits(ContactGroup, _React$Component2);
@@ -620,27 +626,27 @@
       key: 'render',
       value: function render() {
         if (this.state.open || this.props.hashKey === '') {
-          return React.createElement(
+          return React$1.createElement(
             'div',
             { className: 'group-label',
               id: this.props.hashKey + "-c",
               onClick: this.handleOpen },
-            React.createElement(
+            React$1.createElement(
               'span',
               { className: 'group-name',
                 id: this.props.hashKey },
               makeKey(this.props.hashKey)
             ),
-            React.createElement(ContactList, { contacts: this.props.values,
+            React$1.createElement(ContactList, { contacts: this.props.values,
               handleUpdate: this.props.handleUpdate })
           );
         }
-        return React.createElement(
+        return React$1.createElement(
           'div',
           { className: 'group-label',
             id: this.props.hashKey + "-c",
             onClick: this.handleOpen },
-          React.createElement(
+          React$1.createElement(
             'span',
             { className: 'group-name',
               id: this.props.hashKey },
@@ -650,7 +656,7 @@
       }
     }]);
     return ContactGroup;
-  }(React.Component);
+  }(React$1.Component);
 
   function AppControl(_ref) {
     var setGroup = _ref.setGroup;
@@ -658,33 +664,33 @@
     var group = _ref.group;
     var filter = _ref.filter;
 
-    return React.createElement(
+    return React$1.createElement(
       "div",
       { className: "app-control" },
-      React.createElement("input", { className: "control-item",
+      React$1.createElement("input", { className: "control-item",
         type: "text",
         value: filter,
         placeholder: "SEARCH CONTACTS",
         onChange: setFilter }),
-      React.createElement(
+      React$1.createElement(
         "select",
         { className: "control-item", value: group, onChange: setGroup },
-        React.createElement(
+        React$1.createElement(
           "option",
           { value: "NONE" },
           'None'
         ),
-        React.createElement(
+        React$1.createElement(
           "option",
           { value: "FIRST" },
           'First Name'
         ),
-        React.createElement(
+        React$1.createElement(
           "option",
           { value: "LAST" },
           'Last Name'
         ),
-        React.createElement(
+        React$1.createElement(
           "option",
           { value: "MONTH" },
           'Birth Month'
@@ -892,4 +898,4 @@
 
   ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
 
-}());
+}(React));

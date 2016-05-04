@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function AppControl({ setGroup, setFilter, group, filter }) {
   return (
     <div className="app-control">
