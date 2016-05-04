@@ -1,6 +1,6 @@
 # A simple online address book
   To install, virtualenv if you want and `pip install -r requirements.txt`.  The client code is already
-  built, but to do so just `npm install` and `npm run build`.
+  built, but to do so just `npm install` and `npm run build`.  To run the client tests, run `npm run test`.
 
 # database
   I chose to use sqlite for the database, since this is a prototype and it is
