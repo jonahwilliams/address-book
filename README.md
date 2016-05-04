@@ -1,6 +1,6 @@
 # A simple online address book
 
-  <img src=".addrssr.png"></img>
+  <img src="./addrssr.png"></img>
 
 
 # Install and Setup
